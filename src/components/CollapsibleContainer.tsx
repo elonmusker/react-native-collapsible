@@ -19,12 +19,11 @@ type Props = Omit<ViewProps, 'ref' | 'onLayout'> & {
   textInputRefs?: any[];
 };
 
-export default function CollapsibleContainer({
+function CollapsibleContainer({
   children,
   KeyboardAvoidingViewComponent = KeyboardAvoidingView,
   keyboardAvoidingViewProps,
   textInputRefs = [],
-  ...props
 }: Props) {
   const { containerHeight, containerRef } = useInternalCollapsibleContext();
   const { scrollY, scrollTo } = useCollapsibleContext();
@@ -54,17 +53,33 @@ export default function CollapsibleContainer({
     });
   });
 
-  useLayoutEffect(() => {
-    const { height } = containerRef.current.unstable_getBoundingClientRect();
-    containerHeight.value = height;
-  }, []);
-
   return (
     <KeyboardAvoidingViewComponent
       style={styles.container}
       behavior="padding"
       {...keyboardAvoidingViewProps}
     >
+      {children}
+    </KeyboardAvoidingViewComponent>
+  );
+}
+
+export default function CollapsibleContainerWrapper({
+  children,
+  textInputRefs,
+  keyboardAvoidingViewProps,
+  KeyboardAvoidingViewComponent,
+  ...props
+}: Props) {
+  const { containerHeight, containerRef } = useInternalCollapsibleContext();
+
+  useLayoutEffect(() => {
+    const { height } = containerRef.current.unstable_getBoundingClientRect();
+    containerHeight.value = height;
+  }, []);
+
+  function renderContent() {
+    return (
       <View
         {...props}
         ref={containerRef}
@@ -73,8 +88,21 @@ export default function CollapsibleContainer({
       >
         <CollapsibleHeaderConsumer>{children}</CollapsibleHeaderConsumer>
       </View>
-    </KeyboardAvoidingViewComponent>
-  );
+    );
+  }
+
+  if (textInputRefs && textInputRefs.length > 0) {
+    return (
+      <CollapsibleContainer
+        textInputRefs={textInputRefs}
+        keyboardAvoidingViewProps={keyboardAvoidingViewProps}
+        KeyboardAvoidingViewComponent={KeyboardAvoidingViewComponent}
+      >
+        {renderContent()}
+      </CollapsibleContainer>
+    );
+  }
+  return renderContent();
 }
 
 const styles = StyleSheet.create({
