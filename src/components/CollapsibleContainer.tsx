@@ -74,7 +74,7 @@ export default function CollapsibleContainerWrapper({
   const { containerHeight, containerRef } = useInternalCollapsibleContext();
 
   useLayoutEffect(() => {
-    const { height } = containerRef.current.unstable_getBoundingClientRect();
+    const { height } = containerRef.current.getBoundingClientRect();
     containerHeight.value = height;
   }, []);
 
