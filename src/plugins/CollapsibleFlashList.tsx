@@ -33,14 +33,14 @@ export default function CollapsibleFlashList<Data>({
   }, []);
 
   const scrollTo = useCallback((yValue: number, animated = true) => {
-    scrollViewRef.current?.scrollToOffset({
+    scrollViewRef.current?.scrollToOffset?.({
       offset: yValue,
       animated,
     });
   }, []);
 
   const scrollToIndex = useCallback((params) => {
-    scrollViewRef.current?.scrollToIndex(params);
+    scrollViewRef.current?.scrollToIndex?.(params);
   }, []);
 
   const scrollToLocation = useCallback(() => {

@@ -47,7 +47,7 @@ export default function CollapsibleScrollView({
   }, []);
 
   const scrollTo = useCallback((yValue: number, animated = true) => {
-    scrollViewRef.current?.scrollTo({ y: yValue, animated });
+    scrollViewRef.current?.scrollTo?.({ y: yValue, animated });
   }, []);
 
   const scrollToIndex = useCallback(() => {

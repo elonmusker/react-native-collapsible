@@ -58,7 +58,7 @@ export default function CollapsibleSectionList<Data>({
 
   const scrollToLocation = useCallback(
     (params: SectionListScrollParams) => {
-      scrollViewRef.current?.scrollToLocation(params);
+      scrollViewRef.current?.scrollToLocation?.(params);
     },
     [scrollViewRef]
   );
