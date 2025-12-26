@@ -118,17 +118,22 @@ export default function CollapsibleSectionList<Data>({
     [props.contentContainerStyle, internalContentMinHeight]
   );
 
-  const handleContentSizeChange = useCallback((_, height) => {
+  const handleContentSizeChange = useCallback((_: number, height: number) => {
     contentHeight.current = height;
   }, []);
 
   const handleScrollToIndexFailed = useCallback(() => {}, []);
 
   function renderListHeader() {
+    const HeaderComponent = props.ListHeaderComponent;
     return (
       <View>
         <AnimatedTopView height={headerHeight} />
-        {props.ListHeaderComponent}
+        {HeaderComponent && typeof HeaderComponent === 'function' ? (
+          <HeaderComponent />
+        ) : (
+          HeaderComponent
+        )}
       </View>
     );
   }

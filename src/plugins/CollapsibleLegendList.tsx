@@ -3,13 +3,12 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import { View, StyleSheet, FlatListProps } from 'react-native';
 import {
   runOnJS,
-  useAnimatedProps,
   useAnimatedReaction,
   useSharedValue,
 } from 'react-native-reanimated';
 import useAnimatedScroll from '../components/scrollable/useAnimatedScroll';
 import useInternalCollapsibleContext from '../hooks/useInternalCollapsibleContext';
-import type { CollapsibleProps } from '../types';
+import type { CollapsibleProps, ScrollToIndexParams } from '../types';
 import AnimatedTopView from '../components/header/AnimatedTopView';
 import useCollapsibleContext from '../hooks/useCollapsibleContext';
 import { AnimatedLegendList } from '@legendapp/list/reanimated';
@@ -38,7 +37,7 @@ export default function CollapsibleLegendList<Data>({
     });
   }, []);
 
-  const scrollToIndex = useCallback((params) => {
+  const scrollToIndex = useCallback((params: ScrollToIndexParams) => {
     scrollViewRef.current?.scrollToIndex?.(params);
   }, []);
 
@@ -73,19 +72,18 @@ export default function CollapsibleLegendList<Data>({
   const handleScrollToIndexFailed = useCallback(() => {}, []);
 
   function renderListHeader() {
+    const HeaderComponent = props.ListHeaderComponent;
     return (
       <View>
         <AnimatedTopView height={headerHeight} />
-        {props.ListHeaderComponent}
+        {HeaderComponent && typeof HeaderComponent === 'function' ? (
+          <HeaderComponent />
+        ) : (
+          HeaderComponent
+        )}
       </View>
     );
   }
-
-  const animatedProps = useAnimatedProps(() => {
-    return {
-      progressViewOffset: internalProgressViewOffset.value,
-    };
-  });
 
   return (
     <View style={[styles.container, props.style]}>
@@ -101,7 +99,6 @@ export default function CollapsibleLegendList<Data>({
         ListHeaderComponent={renderListHeader()}
         //@ts-ignore
         simultaneousHandlers={[]}
-        animatedProps={animatedProps}
       />
     </View>
   );
