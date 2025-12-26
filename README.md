@@ -13,10 +13,11 @@ yarn add @r0b0t3d/react-native-collapsible
 This library uses `react-native-reanimated 3` for animation. You need to install and configure it in your project. Follow the installation guide here: [react-native-reanimated](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/getting-started/)
 
 ### Requirements
-- React Native >= 0.71
-- React >= 18
+- React Native >= 0.71 (tested with 0.83.1)
+- React >= 18 (tested with 19.2.3)
 - react-native-reanimated >= 3.0.0
 - react-native-gesture-handler >= 2.0.0
+- Node >= 18
 
 ## Key features
 1️⃣ Support FlatList/ScrollView
