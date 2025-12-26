@@ -13,7 +13,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import useAnimatedScroll from './useAnimatedScroll';
 import useInternalCollapsibleContext from '../../hooks/useInternalCollapsibleContext';
-import type { CollapsibleProps } from '../../types';
+import type { CollapsibleProps, ScrollToIndexParams } from '../../types';
 import AnimatedTopView from '../header/AnimatedTopView';
 import useCollapsibleContext from '../../hooks/useCollapsibleContext';
 
@@ -50,7 +50,7 @@ export default function CollapsibleFlatList<Data>({
     });
   }, []);
 
-  const scrollToIndex = useCallback((params) => {
+  const scrollToIndex = useCallback((params: ScrollToIndexParams) => {
     scrollViewRef.current?.scrollToIndex?.(params);
   }, []);
 
@@ -113,17 +113,22 @@ export default function CollapsibleFlatList<Data>({
     [props.contentContainerStyle, internalContentMinHeight]
   );
 
-  const handleContentSizeChange = useCallback((_, height) => {
+  const handleContentSizeChange = useCallback((_: number, height: number) => {
     contentHeight.current = height;
   }, []);
 
   const handleScrollToIndexFailed = useCallback(() => {}, []);
 
   function renderListHeader() {
+    const HeaderComponent = props.ListHeaderComponent;
     return (
       <View>
         <AnimatedTopView height={headerHeight} />
-        {props.ListHeaderComponent}
+        {HeaderComponent && typeof HeaderComponent === 'function' ? (
+          <HeaderComponent />
+        ) : (
+          HeaderComponent
+        )}
       </View>
     );
   }
