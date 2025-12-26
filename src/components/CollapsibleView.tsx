@@ -102,7 +102,6 @@ export default function CollapsibleView({
     }
   );
 
-  // @ts-ignore
   const containerAnimatedStyle = useAnimatedStyle(() => {
     if (collapsedBackgroundColor && expandedBackgroundColor) {
       return {
