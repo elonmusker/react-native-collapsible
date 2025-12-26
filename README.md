@@ -10,7 +10,13 @@ Fully customizable collapsible views
 yarn add @r0b0t3d/react-native-collapsible
 ```
 
-I am using `reanimated 2` for animation. So you should install and follow instruction here to setup your project [react-native-reanimated](https://docs.swmansion.com/react-native-reanimated/docs/installation)
+This library uses `react-native-reanimated 3` for animation. You need to install and configure it in your project. Follow the installation guide here: [react-native-reanimated](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/getting-started/)
+
+### Requirements
+- React Native >= 0.71
+- React >= 18
+- react-native-reanimated >= 3.0.0
+- react-native-gesture-handler >= 2.0.0
 
 ## Key features
 1️⃣ Support FlatList/ScrollView
